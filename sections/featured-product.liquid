@@ -20,7 +20,12 @@
   }
 {%- endstyle -%}
 
+{% if template contains 'cart' %}
 <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
+  {% else %}
+<script type="lazyload_int" data-src="{{ 'product-info.js' | asset_url }}" ></script>
+  {% endif %}
+
 
 <link rel="stylesheet" href="{{ 'component-deferred-media.css' | asset_url }}" media="print" onload="this.media='all'">
 
@@ -586,7 +591,7 @@
                         {% endif %}
                     </div>
                     {% if product.has_only_default_variant == false and block.settings.enable_variant_selectors %}
-                      <script>
+                      <script {% unless template contains 'cart' %}type="lazyload_int"{% endunless %}>
                         function quantityBreakVariantChange(e, quantity, selectIndex) {
                           const productForm = document.querySelector('product-form');
                           const formIdInput = productForm.querySelector('input[name=id]');
@@ -862,9 +867,19 @@
   </div>
 </section>
 
+{% if template contains 'cart' %}
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  {% else %}
+<script type="lazyload_int" data-src="{{ 'product-form.js' | asset_url }}" ></script>
+  {% endif %}
+
 {%- if section.settings.image_zoom == 'hover' -%}
-  <script id="EnableZoomOnHover-featured" src="{{ 'magnify.js' | asset_url }}" defer="defer"></script>
+  {% if template contains 'cart' %}
+<script id="EnableZoomOnHover-featured" src="{{ 'magnify.js' | asset_url }}" defer="defer"></script>
+  {% else %}
+<script id="EnableZoomOnHover-featured" type="lazyload_int" data-src="{{ 'magnify.js' | asset_url }}" ></script>
+  {% endif %}
+  
 {%- endif %}
 {%- if request.design_mode -%}
   <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
@@ -874,7 +889,12 @@
   <script type="application/json" id="ProductJSON-{{ product.id }}">
     {{ product.media | where: 'media_type', 'model' | json }}
   </script>
-  <script src="{{ 'product-model.js' | asset_url }}" defer></script>
+  {% if template contains 'cart' %}
+ <script src="{{ 'product-model.js' | asset_url }}" defer></script>
+  {% else %}
+ <script type="lazyload_int" data-src="{{ 'product-model.js' | asset_url }}"></script>
+  {% endif %}
+ 
 {%- endif -%}
 
 {%- liquid
@@ -930,7 +950,7 @@
   }
 </script>
 
-<script>
+<script {% unless template contains 'cart' %}type="lazyload_int"{% endunless %}>
   document.addEventListener('DOMContentLoaded', function () {
     function isIE() {
       const ua = window.navigator.userAgent;
@@ -958,8 +978,14 @@
 </script>
 
 {% if product.media.size > 0 %}
-  <script src="{{ 'product-modal.js' | asset_url }}" defer="defer"></script>
+  {% if template contains 'cart' %}
+<script src="{{ 'product-modal.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'media-gallery.js' | asset_url }}" defer="defer"></script>
+  {% else %}
+<script type="lazyload_int" data-src="{{ 'product-modal.js' | asset_url }}"></script>
+  <script type="lazyload_int" data-src="{{ 'media-gallery.js' | asset_url }}"></script>
+  {% endif %}
+  
 {% endif %}
 
 {% schema %}

@@ -464,7 +464,7 @@
   </div>
 </footer>
 
-{% javascript %}
+<script {% unless template contains 'cart' %}type="lazyload_int"{% endunless %}>
   class LocalizationForm extends HTMLElement {
     constructor() {
       super();
@@ -514,7 +514,7 @@
   }
 
   customElements.define('localization-form', LocalizationForm);
-{% endjavascript %}
+</script>
 
 {% schema %}
 {

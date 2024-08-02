@@ -59,6 +59,7 @@
                       width: logo_width,
                       height: logo_height,
                       alt: shop.name
+                  | replace: ' src="' , ' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-class="LazyLoad" data-src="' | replace: ' srcset="' , ' data-srcset="'
                   }}
                 {%- else -%}
                   <span class="comparison-table__brand-name">

@@ -8,10 +8,20 @@
 
 {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
   {{ 'component-facets.css' | asset_url | stylesheet_tag }}
-  <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+  {% if template contains 'cart' %}
+ <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+  {% else %}
+ <script type="lazyload_int" data-src="{{ 'facets.js' | asset_url }}" ></script>
+  {% endif %}
+ 
 {%- endif -%}
 
+{% if template contains 'cart' %}
 <script src="{{ 'main-search.js' | asset_url }}" defer="defer"></script>
+  {% else %}
+<script type="lazyload_int" data-src="{{ 'main-search.js' | asset_url }}" ></script>
+  {% endif %}
+
 
 <style>
   .template-search__header {

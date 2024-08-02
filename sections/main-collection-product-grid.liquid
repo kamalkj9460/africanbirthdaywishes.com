@@ -12,8 +12,13 @@
 
 {%- if section.settings.enable_quick_add -%}
   <link rel="stylesheet" href="{{ 'quick-add.css' | asset_url }}" media="print" onload="this.media='all'">
-  <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
-  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+   {% if template contains 'cart' %}
+<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  {% else %}
+<script type="lazyload_int" data-src="{{ 'quick-add.js' | asset_url }}" ></script>
+<script type="lazyload_int" data-src="{{ 'product-form.js' | asset_url }}" ></script>
+  {% endif %}
 {%- endif -%}
 <noscript>{{ 'component-rte.css' | asset_url | stylesheet_tag }}</noscript>
 
@@ -106,7 +111,11 @@
 
   <div class="{% if section.settings.filter_type == 'vertical' %} facets-vertical page-width{% endif %}">
     {{ 'component-facets.css' | asset_url | stylesheet_tag }}
-    <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+   {% if template contains 'cart' %}
+ <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+  {% else %}
+ <script type="lazyload_int" data-src="{{ 'facets.js' | asset_url }}" ></script>
+  {% endif %}
     {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
       <aside
         aria-labelledby="verticalTitle"

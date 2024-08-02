@@ -18,6 +18,7 @@
               {% endif %}
             >
               <img
+                {% comment %}
                 srcset="
                   {% if article.image.width >= 350 %}{{ article.image | image_url: width: 350 }} 350w,{% endif %}
                   {% if article.image.width >= 750 %}{{ article.image | image_url: width: 750 }} 750w,{% endif %}
@@ -26,9 +27,11 @@
                   {% if article.image.width >= 2200 %}{{ article.image | image_url: width: 2200 }} 2200w,{% endif %}
                   {% if article.image.width >= 3000 %}{{ article.image | image_url: width: 3000 }} 3000w,{% endif %}
                   {{ article.image | image_url }} {{ article.image.width }}w
-                "
+                "{% endcomment %}
                 sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 }}px, (min-width: 750px) calc(100vw - 10rem), 100vw"
-                src="{{ article.image | image_url: width: 1100 }}"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-class="LazyLoad" 
+                data-src="{{ article.image | image_url: width: 1100 }}"
+                data-mob-src="{{ article.image | image_url: width: 750 }}"
                 loading="eager"
                 fetchpriority="high"
                 width="{{ article.image.width }}"
@@ -60,7 +63,7 @@
           itemprop="articleBody"
           {{ block.shopify_attributes }}
         >
-          {{ article.content }}
+          {{ article.content | replace: 'iframe', 'iframelazy' | replace: 'src="https://www.youtube.com/', 'data-class="LazyLoad" data-src="https://www.youtube.com/'  }}
         </div>
 
       {%- when 'share' -%}

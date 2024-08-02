@@ -1,0 +1,54 @@
+{% comment %} air reviews {% endcomment %}
+<div id="shopify-block-14710238943034738919" class="shopify-block shopify-app-block">
+    <script {% unless canonical_url contains '/customer-reviews' %}type="lazyload_int"{% endunless %}>
+      try {
+        if (!window.AIR_REVIEWS) {
+          const shopData = {};
+          const settings = {{ shop.metafields.air_reviews_settings.data.value | json | replace:'\/' , '/' }};
+          const translations = {{ shop.metafields.air_reviews_translation.data.value | json }};
+          const productReview = {% if template contains 'product'   %}{{ product.metafields.air_reviews_product.data.value | json | replace:'\/' , '/' }}{% else %}false{% endif %};
+          const statusFields = {{ shop.metafields.air_reviews_status.data.value | json }};
+          const hasStorefrontToken = true;
+          const hasUGCContent = false;
+          const testimonials = false;
+  
+          window.AIR_REVIEWS = {
+            branding: statusFields.isRemoveBranding,
+            appBlock: statusFields.supportAppBlock,
+            shopData,
+            settings,
+            translations,
+            productReview,
+            hasStorefrontToken,
+            hasUGCContent,
+            testimonials,
+            collections: [],
+            collectionsName: [],
+            product: {{ product | json }},
+            template: {{ template.name | json }},
+            customer: {
+              id: null,
+              email: null,
+              first_name: null,
+              last_name: null,
+              orders: null
+            },
+            shopLogo: "\/\/africanbirthdaywishes.com\/cdn\/shop\/files\/logo_medium_e434a425-62c3-4481-b29c-1cffb100bfd6.png?v=1708701649",
+          };
+          AIR_REVIEWS.product?.collections?.forEach(collection => {
+            AIR_REVIEWS.collections.push(collection.id.replace("$", "\\$"));
+            AIR_REVIEWS.collectionsName.push(collection.title.replace("$", "\\$"));
+          });
+  
+          window.AIR_REVIEWS.shopData = window.AIR_REVIEWS.shopData || {};
+        }
+      } catch (e) {
+        console.error("Error assigning avada air reivews variable" + e);
+      }
+    </script>
+  
+  
+  
+  
+  
+  </div>

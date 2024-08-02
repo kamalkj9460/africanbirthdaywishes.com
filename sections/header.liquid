@@ -108,7 +108,7 @@
     }
   }
 {%- endstyle -%}
-
+  {% if template contains 'cart' %}
 <script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
@@ -116,6 +116,16 @@
 {%- if settings.cart_type == "drawer" -%}
   <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
+  {% else %}
+<script type="lazyload_int" data-src="{{ 'details-disclosure.js' | asset_url }}"></script>
+<script type="lazyload_int" data-src="{{ 'details-modal.js' | asset_url }}"></script>
+<script type="lazyload_int" data-src="{{ 'cart-notification.js' | asset_url }}"></script>
+<script type="lazyload_int" data-src="{{ 'search-form.js' | asset_url }}"></script>
+{%- if settings.cart_type == "drawer" -%}
+  <script type="lazyload_int" data-src="{{ 'cart-drawer.js' | asset_url }}"></script>
+{%- endif -%}
+  {% endif %}
+
 
 <svg xmlns="http://www.w3.org/2000/svg" class="hidden">
   <symbol id="icon-search" viewbox="0 0 18 19" fill="none">
@@ -545,7 +555,7 @@
             {%- if settings.logo != blank -%}
               {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
               {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-              {{ settings.logo | image_url: width: 500 | image_tag:
+              {{ settings.logo | image_url: width: 200 | image_tag:
                 class: 'header__heading-logo',
                 widths: '50, 100, 150, 200, 250, 300, 400, 500',
                 height: logo_height,
@@ -685,7 +695,7 @@
   {%- render 'cart-notification', color_scheme: section.settings.color_scheme -%}
 {%- endif -%}
 
-{% javascript %}
+<script {% unless template contains 'cart' %}type="lazyload_int"{% endunless %}>
   class StickyHeader extends HTMLElement {
     constructor() {
       super();
@@ -795,7 +805,7 @@
   }
 
   customElements.define('sticky-header', StickyHeader);
-{% endjavascript %}
+</script>
 
 <script type="application/ld+json">
   {

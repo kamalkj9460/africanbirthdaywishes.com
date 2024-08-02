@@ -4,10 +4,16 @@
   Usage:
   {% render 'cart-drawer' %}
 {% endcomment %}
-
+{% if template contains 'cart' %}
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  {% else %}
+<script type="lazyload_int" data-src="{{ 'cart.js' | asset_url }}" ></script>
+<script type="lazyload_int" data-src="{{ 'product-info.js' | asset_url }}" ></script>
+<script type="lazyload_int" data-src="{{ 'product-form.js' | asset_url }}" ></script>
+  {% endif %}
+
 
 {% if settings.cart_drawer_collection != blank %}
   {{ 'component-card.css' | asset_url | stylesheet_tag }}
@@ -478,7 +484,7 @@
   </div>
 </cart-drawer>
 
-<script>
+<script {% unless template contains 'cart' %}type="lazyload_int"{% endunless %}>
   function primaryUpsellVariantChange() {
     var primaryUpsellContainer = document.querySelector('.cart-primary-upsell')
     var variantSelects = primaryUpsellContainer.querySelector('#variant-selects-cart-upsell-1');

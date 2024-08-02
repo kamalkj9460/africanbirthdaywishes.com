@@ -120,10 +120,11 @@
                     </div>
                   </button>
                   <video
-                    src="{{ block.settings.video_src }}"
+                    data-src="{{ block.settings.video_src }}"
+                    class="myVideo"
                     playsinline
                     {% if block.settings.thumbnail != blank %}
-                      poster="{{ block.settings.thumbnail | image_url }}"
+                      data-poster="{{ block.settings.thumbnail | image_url }}"
                     {% endif %}
                     {% if block.settings.loop %}
                       loop
@@ -149,7 +150,7 @@
   </div>
 </div>
 
-<script>
+<script {% unless template contains 'cart' %}type="lazyload_int"{% endunless %}>
   document.addEventListener('DOMContentLoaded', function() {
     $("#image-slider-container-{{ section.id }}").slick({
       slidesToShow: {{ section.settings.slides_desktop }},

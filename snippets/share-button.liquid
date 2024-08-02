@@ -10,7 +10,12 @@
     share_link: share_url
   %}
 {% endcomment %}
+{% if template contains 'cart' %}
 <script src="{{ 'share.js' | asset_url }}" defer="defer"></script>
+  {% else %}
+<script type="lazyload-int" data-src="{{ 'share.js' | asset_url }}" ></script>
+  {% endif %}
+
 
 <share-button id="Share-{{ section.id }}" class="share-button quick-add-hidden" {{ block.shopify_attributes }}>
   <button class="share-button__button hidden">
